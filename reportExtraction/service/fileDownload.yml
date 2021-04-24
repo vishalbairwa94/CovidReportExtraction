@@ -1,0 +1,32 @@
+Covid Report Validation
+  ---
+tags:
+  - DataSpectro
+consumes:
+  - multipart/form-data
+parameters:
+  - in: formData
+    name: file
+    type: file
+    required: true
+    description: Upload JPEG file
+responses:
+  404:
+    description: failed
+  200:
+    schema:
+      id: reportExtraction
+      properties:
+        data:
+          type: object
+          properties:
+            Date:
+              type: string
+            Name:
+              type: string
+            Result:
+              type: string
+            Validation:
+              type: string
+
+
