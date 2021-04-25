@@ -16,7 +16,7 @@ def name_extraction(text_list):
     # input will be list of text splitted i.e whole report splitted into sentences.
     # each index of list is one sentence
 
-    name_phrases = ['name', 'patient name']
+    name_phrases = ['name', 'patient name', 'patient']
     text_with_name = []
     for each in text_list:
         for i in name_phrases:
@@ -55,7 +55,7 @@ def report_result(text_list):
 
     result = None
     for i in text_with_result_report:
-        if 'positive' in spell(i.lower()):
+        if 'positive' in spell(i.lower()) or 'detected' in spell(i.lower()):
             result = 'POSITIVE'
         if 'negative' in spell(i.lower()):
             result = 'NEGATIVE'
@@ -70,7 +70,7 @@ def fetch_date(text_list):
     text_with_collect_phrases = []
     for j in range(0, len(text_list) - 1):
         for each in [ps.stem(x) for x in text_list[j].split(" ")]:
-            if 'collect' in spell(each):
+            if 'collect' in spell(each) or 'coll' in spell(each):
                 text_with_collect_phrases.append(text_list[j])
 
     collect_phrases_list_cleaned = []

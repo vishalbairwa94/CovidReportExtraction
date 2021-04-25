@@ -42,6 +42,8 @@ def covrex():
     result['Result'] = report_res
     result['Date'] = date
     result['Validation'] = validation_report
+    if report_res == 'POSITIVE':
+        result['Validation'] = 'NOT VALIDATED'
     os.remove(output)
 
     return jsonify({'data': result})
