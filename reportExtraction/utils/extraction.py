@@ -43,15 +43,23 @@ def report_result(text_list):
     # each index of list is one sentence
 
     result_phrases = ['result',
-                      'interpretation',
                       'examination',
                       'investigation',
                       'observation']
     text_with_result_report = []
+    sent_result_index = None
+    break_flag = False
     for each in text_list:
         for i in result_phrases:
             if i in each.lower():
+                sent_result_index = text_list.index(each)
                 text_with_result_report.append(each)
+                break_flag = True
+                break
+        if break_flag == True:
+            break
+
+    text_with_result_report = text_with_result_report + text_list[sent_result_index+1:sent_result_index+2]
 
     result = None
     for i in text_with_result_report:

@@ -26,16 +26,20 @@ def covrex():
     filename = secure_filename(file.filename)
     file.save(filename)
     file_path = '/Users/vishalbairwa/IdeaProjects/CovidReportExtraction/reportExtraction/service/' + filename
-
+    validation_report = None
     output = file_path
     pytesseract.pytesseract.tesseract_cmd = r'/usr/local/Cellar/tesseract/4.1.1/bin/tesseract'
     text = pytesseract.image_to_string(Image.open(output))
     text_splitted = text.splitlines()
 
+
     name = name_extraction(text_splitted)
     report_res = report_result(text_splitted)
     date = fetch_date(text_splitted)
-    validation_report = validation(date)
+    if date != None:
+        validation_report = validation(date)
+    else:
+        validation_report = "Error"
 
     result = {}
     result['Name'] = name
