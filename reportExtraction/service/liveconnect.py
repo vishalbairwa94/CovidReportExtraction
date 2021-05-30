@@ -10,7 +10,7 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
 spacy_nlp = spacy.load('en_core_web_sm')
-from reportExtraction.utils.extraction import name_extraction, fetch_date, report_result, validation
+from reportExtraction.utils.extraction import name_extraction, report_result, validation, date_Parsing
 
 # creating a Flask app
 app = Flask(__name__)
@@ -32,10 +32,12 @@ def covrex():
     text = pytesseract.image_to_string(Image.open(output))
     text_splitted = text.splitlines()
 
+    date = date_Parsing(text_splitted)
+
 
     name = name_extraction(text_splitted)
     report_res = report_result(text_splitted)
-    date = fetch_date(text_splitted)
+    # date = fetch_date(text_splitted)
     if date != None:
         validation_report = validation(date)
     else:
@@ -44,7 +46,6 @@ def covrex():
     result = {}
     result['Name'] = name
     result['Result'] = report_res
-    result['Date'] = date
     result['Validation'] = validation_report
     if report_res == 'POSITIVE':
         result['Validation'] = 'NOT VALIDATED'
